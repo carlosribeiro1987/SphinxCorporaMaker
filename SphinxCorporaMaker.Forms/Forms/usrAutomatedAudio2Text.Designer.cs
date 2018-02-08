@@ -27,7 +27,7 @@
             this.lblTitleAutomated = new System.Windows.Forms.Label();
             this.pnlContainer = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvSentences = new System.Windows.Forms.DataGridView();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colText = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAudioFormat = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -36,7 +36,7 @@
             this.txtChoosAudioAutomated = new System.Windows.Forms.TextBox();
             this.pnlContainer.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSentences)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTitleAutomated
@@ -66,7 +66,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.dataGridView1);
+            this.groupBox1.Controls.Add(this.dgvSentences);
             this.groupBox1.Location = new System.Drawing.Point(9, 96);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(669, 295);
@@ -74,19 +74,19 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Audio Files";
             // 
-            // dataGridView1
+            // dgvSentences
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvSentences.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSentences.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
             this.colText,
             this.colAudioFormat,
             this.colPlayAudio});
-            this.dataGridView1.Location = new System.Drawing.Point(16, 19);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(641, 232);
-            this.dataGridView1.TabIndex = 2;
+            this.dgvSentences.Location = new System.Drawing.Point(16, 19);
+            this.dgvSentences.Name = "dgvSentences";
+            this.dgvSentences.RowHeadersVisible = false;
+            this.dgvSentences.Size = new System.Drawing.Size(641, 232);
+            this.dgvSentences.TabIndex = 2;
             // 
             // colId
             // 
@@ -145,7 +145,7 @@
             this.pnlContainer.ResumeLayout(false);
             this.pnlContainer.PerformLayout();
             this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSentences)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -155,7 +155,7 @@
         private System.Windows.Forms.Label lblTitleAutomated;
         private System.Windows.Forms.Panel pnlContainer;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvSentences;
         private System.Windows.Forms.DataGridViewTextBoxColumn colId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colText;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAudioFormat;

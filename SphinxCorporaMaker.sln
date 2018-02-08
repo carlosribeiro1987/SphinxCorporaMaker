@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SphinxCorporaMaker", "SphinxCorporaMaker\SphinxCorporaMaker.csproj", "{C8E477F7-A73C-48A7-B5E6-C8A952695C0A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SphinxCorporaMaker.Forms", "SphinxCorporaMaker.Forms\SphinxCorporaMaker.Forms.csproj", "{C8E477F7-A73C-48A7-B5E6-C8A952695C0A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Util", "Util\Util.csproj", "{D7D0EF73-E7A7-4F6E-841E-BAE8B16ADFF7}"
 EndProject

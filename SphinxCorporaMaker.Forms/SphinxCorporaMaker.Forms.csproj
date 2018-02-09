@@ -104,6 +104,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\frmRecAudio4Text.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmRecAudio4Text.Designer.cs">
+      <DependentUpon>frmRecAudio4Text.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\usrAutomatedAudio2Text.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -134,6 +140,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>pt-BR.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Forms\frmRecAudio4Text.resx">
+      <DependentUpon>frmRecAudio4Text.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\usrAutomatedAudio2Text.resx">
       <DependentUpon>usrAutomatedAudio2Text.cs</DependentUpon>
     </EmbeddedResource>
@@ -180,6 +189,9 @@
       <Project>{d7d0ef73-e7a7-4f6e-841e-bae8b16adff7}</Project>
       <Name>Util</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UserControls\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Grpc.Core.1.6.1\build\net45\Grpc.Core.targets" Condition="Exists('..\packages\Grpc.Core.1.6.1\build\net45\Grpc.Core.targets')" />

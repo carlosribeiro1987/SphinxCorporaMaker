@@ -39,7 +39,6 @@
             this.btnAudio = new System.Windows.Forms.Button();
             this.btnTextFile = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.usrRecordAudio1 = new SphinxCorporaMaker.Forms.usrRecordAudio();
             this.menMainMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -164,22 +163,13 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // usrRecordAudio1
-            // 
-            this.usrRecordAudio1.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.usrRecordAudio1.Location = new System.Drawing.Point(111, 21);
-            this.usrRecordAudio1.Name = "usrRecordAudio1";
-            this.usrRecordAudio1.Padding = new System.Windows.Forms.Padding(5, 0, 5, 5);
-            this.usrRecordAudio1.Size = new System.Drawing.Size(700, 520);
-            this.usrRecordAudio1.TabIndex = 2;
+
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(880, 586);
-            this.Controls.Add(this.usrRecordAudio1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menMainMenu);
             this.MainMenuStrip = this.menMainMenu;
@@ -211,7 +201,6 @@
         private System.Windows.Forms.Button btnAudio;
         private System.Windows.Forms.Button btnTextFile;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private Forms.usrRecordAudio usrRecordAudio1;
     }
 }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SphinxCorporaMaker.Forms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,7 +22,9 @@ namespace SphinxCorporaMaker {
 
 
         private void btnTextFile_Click(object sender, EventArgs e) {
-            MessageBox.Show(Path.GetFileNameWithoutExtension(Application.StartupPath + "/SphinxCorporaMaker.exe"));
+            // MessageBox.Show(Path.GetFileNameWithoutExtension(Application.StartupPath + "/SphinxCorporaMaker.exe"));
+            frmRecAudio4Text recAudio = new frmRecAudio4Text();
+            recAudio.Show();
         }
 
         private void btnAudio_Click(object sender, EventArgs e) {

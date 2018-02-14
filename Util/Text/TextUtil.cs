@@ -14,7 +14,7 @@ namespace Util.Text {
         /// <param name="input">The string to be splitted.</param>
         /// <returns>A string array with the splitted sentences.</returns>
         public static string[] SplitSentences(string input) {
-            string[] output = input.Split('.', ':', '!', '(', ')', '?', '/');
+            string[] output = input.Split('.', ':', '!', '(', ')', '?', '/', '\n');
             for (int i = 0; i < output.Length;i++) {
                 if (output[i].StartsWith(" "))
                     output[i] = output[i].Substring(1);
@@ -29,7 +29,7 @@ namespace Util.Text {
         /// <param name="input">The input string.</param>
         /// <returns>A string containing only letters and spaces.</returns>
         public static string RemoveSymbols(string input) {
-            return Regex.Replace(input, @"[^\p{L} ]", "", RegexOptions.None, TimeSpan.FromSeconds(1.5));
+            return Regex.Replace(input, @"[^\p{L}- ]", "", RegexOptions.None, TimeSpan.FromSeconds(1.5));
         }
 
     }

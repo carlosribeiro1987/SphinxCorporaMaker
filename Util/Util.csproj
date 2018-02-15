@@ -103,10 +103,16 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WaveFormRendererLib">
+      <HintPath>..\..\..\..\..\..\SOURCES\NAudio.WaveFormRenderer-master\NAudio.WaveFormRenderer-master\WaveFormRendererLib\bin\Debug\WaveFormRendererLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Audio\AudioController.cs" />
     <Compile Include="Audio\AudioUtil.cs" />
     <Compile Include="Audio\AudioFileReaderExt.cs" />
+    <Compile Include="Audio\PlotWaveform.cs" />
+    <Compile Include="Audio\RecordWaveAudio.cs" />
     <Compile Include="Exception\AudioException.cs" />
     <Compile Include="Exception\WebSpeechException.cs" />
     <Compile Include="WebSpeech\WebSpeech.cs" />

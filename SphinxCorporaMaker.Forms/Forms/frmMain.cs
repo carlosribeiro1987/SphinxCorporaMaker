@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Util;
 using Util.Text;
+using Util.Audio;
 
 namespace SphinxCorporaMaker {
     public partial class frmMain : Form {
@@ -28,8 +29,8 @@ namespace SphinxCorporaMaker {
         }
 
         private void btnAudio_Click(object sender, EventArgs e) {
-            if(openFileDialog1.ShowDialog() == DialogResult.OK) {
-                string converted = AudioUtil.Mp3ToWav(openFileDialog1.FileName, Application.StartupPath+"/testeWav");
+            if (openFileDialog1.ShowDialog() == DialogResult.OK) {
+                string converted = AudioUtil.Mp3ToWav(openFileDialog1.FileName, Application.StartupPath + "/testeWav");
                 MessageBox.Show(Path.GetExtension(converted));
 
                 if (MessageBox.Show("Sucessfully converted MP3 to WAV!\n\nConvert to mono?", "Converted", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes) {
@@ -40,9 +41,20 @@ namespace SphinxCorporaMaker {
                 }
 
             }
-            
+
         }
 
-        
+        private void button1_Click(object sender, EventArgs e) {
+            var audio = new RecordWaveAudio(Application.StartupPath, "TESTE");
+            if (button1.Text == "Gravar") {
+                button1.Text = "Parar";
+                audio.Start();
+            }
+            else {
+                audio.Stop();
+                button1.Text = "Gravar";
+            }
+        }
     }
 }
+

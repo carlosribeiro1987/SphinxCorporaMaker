@@ -16,6 +16,7 @@ using Util.Audio;
 
 namespace SphinxCorporaMaker {
     public partial class frmMain : Form {
+        RecordWaveAudio audio;
         public frmMain() {
             InitializeComponent();
         }
@@ -45,15 +46,27 @@ namespace SphinxCorporaMaker {
         }
 
         private void button1_Click(object sender, EventArgs e) {
-            var audio = new RecordWaveAudio(Application.StartupPath, "TESTE");
+            
             if (button1.Text == "Gravar") {
                 button1.Text = "Parar";
+                audio = new RecordWaveAudio(Application.StartupPath, "TESTE");
                 audio.Start();
             }
             else {
-                audio.Stop();
+                if (audio != null) {
+                    audio.Stop();
+                    audio = null;
+                }
                 button1.Text = "Gravar";
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e) {
+            comboBox1.DataSource = RecordWaveAudio.InputAudioDevices();
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e) {
+            label1.Text = comboBox2.SelectedIndex.ToString();
         }
     }
 }

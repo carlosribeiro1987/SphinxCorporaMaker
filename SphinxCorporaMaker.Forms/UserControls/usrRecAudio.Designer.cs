@@ -23,15 +23,19 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblTotalSentences = new System.Windows.Forms.Label();
             this.dgvSentences = new System.Windows.Forms.DataGridView();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colText = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cmbInputDevices = new System.Windows.Forms.ComboBox();
             this.btnRecord = new System.Windows.Forms.Button();
             this.txtCurrentSentence = new System.Windows.Forms.TextBox();
-            this.lblTotalSentences = new System.Windows.Forms.Label();
+            this.lblRecodStatus = new System.Windows.Forms.Label();
+            this.tmrRecording = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSentences)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -47,6 +51,16 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Record audio for the sentences";
+            // 
+            // lblTotalSentences
+            // 
+            this.lblTotalSentences.AutoSize = true;
+            this.lblTotalSentences.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalSentences.Location = new System.Drawing.Point(10, 275);
+            this.lblTotalSentences.Name = "lblTotalSentences";
+            this.lblTotalSentences.Size = new System.Drawing.Size(103, 17);
+            this.lblTotalSentences.TabIndex = 1;
+            this.lblTotalSentences.Text = "0000 sentences.";
             // 
             // dgvSentences
             // 
@@ -81,7 +95,9 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.panel1);
+            this.groupBox2.Controls.Add(this.lblRecodStatus);
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.cmbInputDevices);
             this.groupBox2.Controls.Add(this.btnRecord);
             this.groupBox2.Controls.Add(this.txtCurrentSentence);
             this.groupBox2.Location = new System.Drawing.Point(0, 319);
@@ -91,22 +107,34 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Click \"Record\" button then read the sentence";
             // 
-            // panel1
+            // label1
             // 
-            this.panel1.Location = new System.Drawing.Point(13, 97);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(450, 78);
-            this.panel1.TabIndex = 5;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(10, 97);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(69, 13);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Input device:";
+            // 
+            // cmbInputDevices
+            // 
+            this.cmbInputDevices.FormattingEnabled = true;
+            this.cmbInputDevices.Location = new System.Drawing.Point(85, 94);
+            this.cmbInputDevices.Name = "cmbInputDevices";
+            this.cmbInputDevices.Size = new System.Drawing.Size(192, 21);
+            this.cmbInputDevices.TabIndex = 5;
             // 
             // btnRecord
             // 
-            this.btnRecord.Location = new System.Drawing.Point(578, 147);
+            this.btnRecord.Location = new System.Drawing.Point(578, 97);
             this.btnRecord.Name = "btnRecord";
             this.btnRecord.Size = new System.Drawing.Size(95, 28);
             this.btnRecord.TabIndex = 4;
             this.btnRecord.Text = "Record";
             this.btnRecord.UseVisualStyleBackColor = true;
             this.btnRecord.Click += new System.EventHandler(this.btnRecord_Click);
+            this.btnRecord.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnRecord_MouseDown);
+            this.btnRecord.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnRecord_MouseUp);
             // 
             // txtCurrentSentence
             // 
@@ -120,15 +148,20 @@
             this.txtCurrentSentence.TabIndex = 3;
             this.txtCurrentSentence.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // lblTotalSentences
+            // lblRecodStatus
             // 
-            this.lblTotalSentences.AutoSize = true;
-            this.lblTotalSentences.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotalSentences.Location = new System.Drawing.Point(10, 275);
-            this.lblTotalSentences.Name = "lblTotalSentences";
-            this.lblTotalSentences.Size = new System.Drawing.Size(103, 17);
-            this.lblTotalSentences.TabIndex = 1;
-            this.lblTotalSentences.Text = "0000 sentences.";
+            this.lblRecodStatus.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRecodStatus.Location = new System.Drawing.Point(283, 97);
+            this.lblRecodStatus.Name = "lblRecodStatus";
+            this.lblRecodStatus.Size = new System.Drawing.Size(289, 28);
+            this.lblRecodStatus.TabIndex = 7;
+            this.lblRecodStatus.Text = "Hold the button to record.";
+            this.lblRecodStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tmrRecording
+            // 
+            this.tmrRecording.Interval = 300;
+            this.tmrRecording.Tick += new System.EventHandler(this.tmrRecording_Tick);
             // 
             // usrRecAudio
             // 
@@ -139,6 +172,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "usrRecAudio";
             this.Size = new System.Drawing.Size(685, 500);
+            this.Load += new System.EventHandler(this.usrRecAudio_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSentences)).EndInit();
@@ -156,8 +190,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colText;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox txtCurrentSentence;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnRecord;
         private System.Windows.Forms.Label lblTotalSentences;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cmbInputDevices;
+        private System.Windows.Forms.Label lblRecodStatus;
+        private System.Windows.Forms.Timer tmrRecording;
     }
 }

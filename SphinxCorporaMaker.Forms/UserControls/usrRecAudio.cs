@@ -9,10 +9,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Util.Text;
 using System.IO;
+using Util.Audio;
 
 namespace SphinxCorporaMaker.UserControls {
     public partial class usrRecAudio : UserControl {
         string audioDir = Path.Combine(Application.StartupPath, "CorporaFiles", "audio");
+        RecordWaveAudio wavAudio = null;
         public usrRecAudio() {
             InitializeComponent();
         }
@@ -32,6 +34,7 @@ namespace SphinxCorporaMaker.UserControls {
         }
 
         private void dgvSentences_SelectionChanged(object sender, EventArgs e) {
+            btnRecord.Enabled = dgvSentences.SelectedRows.Count > 0;
             if (dgvSentences.SelectedRows.Count > 0) {
                 DataGridViewRow row = dgvSentences.SelectedRows[0];
                 txtCurrentSentence.Text = row.Cells[1].Value.ToString();
@@ -39,10 +42,55 @@ namespace SphinxCorporaMaker.UserControls {
         }
 
         private void btnRecord_Click(object sender, EventArgs e) {
+            
+
+            //MessageBox.Show(audioDir);
+        }
+
+        private void usrRecAudio_Load(object sender, EventArgs e) {
+            cmbInputDevices.DataSource = RecordWaveAudio.InputAudioDevices();
+            cmbInputDevices.SelectedIndex = 0;
+        }
+
+        private void btnRecord_MouseUp(object sender, MouseEventArgs e) {
+            dgvSentences.MultiSelect = false;
+            
+            tmrRecording.Enabled = false;
+            lblRecodStatus.Text = "Hold the button to record.";
+            lblRecodStatus.ForeColor = Color.Black;
+            NextSentenceRow();
+            if (wavAudio != null) {
+                wavAudio.Stop();
+                wavAudio = null;
+            }
+        }
+        private void NextSentenceRow() {
+            DataGridViewRow currentRow = dgvSentences.CurrentRow;
+            int currRowIndex = currentRow.Index;
+            int maxRowIndex = dgvSentences.Rows.Count - 1 - 1;
+            if (currRowIndex < maxRowIndex) {
+                DataGridViewRow nextRow = dgvSentences.Rows[currRowIndex + 1];
+                dgvSentences.CurrentCell = nextRow.Cells[0];
+                nextRow.Selected = true;
+                dgvSentences.Focus();
+            }
+        }
+
+        private void btnRecord_MouseDown(object sender, MouseEventArgs e) {
+            lblRecodStatus.Text = "RECORDING...";
+            lblRecodStatus.ForeColor = Color.Red;
+            tmrRecording.Enabled = true;
+            if (dgvSentences.SelectedRows.Count < 1)
+                return;
             if (!Directory.Exists(audioDir)) {
                 Directory.CreateDirectory(audioDir);
             }
-            MessageBox.Show(audioDir);
+            wavAudio = new RecordWaveAudio(audioDir, dgvSentences.CurrentRow.Cells[0].Value.ToString(), cmbInputDevices.SelectedIndex);
+            wavAudio.Start();
+        }
+
+        private void tmrRecording_Tick(object sender, EventArgs e) {
+            lblRecodStatus.Visible = !lblRecodStatus.Visible;
         }
     }
 }

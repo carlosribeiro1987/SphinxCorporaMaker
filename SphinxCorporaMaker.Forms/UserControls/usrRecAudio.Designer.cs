@@ -25,17 +25,19 @@
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblAudioTime = new System.Windows.Forms.Label();
             this.lblTotalSentences = new System.Windows.Forms.Label();
             this.dgvSentences = new System.Windows.Forms.DataGridView();
-            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colText = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lblRecordStatus = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.cmbInputDevices = new System.Windows.Forms.ComboBox();
             this.btnRecord = new System.Windows.Forms.Button();
             this.txtCurrentSentence = new System.Windows.Forms.TextBox();
-            this.lblRecodStatus = new System.Windows.Forms.Label();
             this.tmrRecording = new System.Windows.Forms.Timer(this.components);
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDuration = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSentences)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -43,6 +45,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.lblAudioTime);
             this.groupBox1.Controls.Add(this.lblTotalSentences);
             this.groupBox1.Controls.Add(this.dgvSentences);
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
@@ -51,6 +54,18 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Record audio for the sentences";
+            // 
+            // lblAudioTime
+            // 
+            this.lblAudioTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblAudioTime.AutoSize = true;
+            this.lblAudioTime.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAudioTime.Location = new System.Drawing.Point(501, 275);
+            this.lblAudioTime.Name = "lblAudioTime";
+            this.lblAudioTime.Size = new System.Drawing.Size(172, 17);
+            this.lblAudioTime.TabIndex = 2;
+            this.lblAudioTime.Text = "Total audio time: 00:00:00.0";
+            this.lblAudioTime.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // lblTotalSentences
             // 
@@ -71,31 +86,21 @@
             this.dgvSentences.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSentences.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
-            this.colText});
+            this.colText,
+            this.colDuration});
             this.dgvSentences.Location = new System.Drawing.Point(13, 20);
             this.dgvSentences.MultiSelect = false;
             this.dgvSentences.Name = "dgvSentences";
+            this.dgvSentences.ReadOnly = true;
             this.dgvSentences.RowHeadersVisible = false;
             this.dgvSentences.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvSentences.Size = new System.Drawing.Size(660, 252);
             this.dgvSentences.TabIndex = 0;
             this.dgvSentences.SelectionChanged += new System.EventHandler(this.dgvSentences_SelectionChanged);
             // 
-            // colId
-            // 
-            this.colId.HeaderText = "ID";
-            this.colId.Name = "colId";
-            this.colId.Width = 80;
-            // 
-            // colText
-            // 
-            this.colText.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colText.HeaderText = "Text";
-            this.colText.Name = "colText";
-            // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.lblRecodStatus);
+            this.groupBox2.Controls.Add(this.lblRecordStatus);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.cmbInputDevices);
             this.groupBox2.Controls.Add(this.btnRecord);
@@ -106,6 +111,16 @@
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Click \"Record\" button then read the sentence";
+            // 
+            // lblRecordStatus
+            // 
+            this.lblRecordStatus.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRecordStatus.Location = new System.Drawing.Point(283, 97);
+            this.lblRecordStatus.Name = "lblRecordStatus";
+            this.lblRecordStatus.Size = new System.Drawing.Size(289, 28);
+            this.lblRecordStatus.TabIndex = 7;
+            this.lblRecordStatus.Text = "Hold the button to record.";
+            this.lblRecordStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label1
             // 
@@ -132,7 +147,6 @@
             this.btnRecord.TabIndex = 4;
             this.btnRecord.Text = "Record";
             this.btnRecord.UseVisualStyleBackColor = true;
-            this.btnRecord.Click += new System.EventHandler(this.btnRecord_Click);
             this.btnRecord.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnRecord_MouseDown);
             this.btnRecord.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnRecord_MouseUp);
             // 
@@ -148,20 +162,28 @@
             this.txtCurrentSentence.TabIndex = 3;
             this.txtCurrentSentence.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // lblRecodStatus
-            // 
-            this.lblRecodStatus.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRecodStatus.Location = new System.Drawing.Point(283, 97);
-            this.lblRecodStatus.Name = "lblRecodStatus";
-            this.lblRecodStatus.Size = new System.Drawing.Size(289, 28);
-            this.lblRecodStatus.TabIndex = 7;
-            this.lblRecodStatus.Text = "Hold the button to record.";
-            this.lblRecodStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // tmrRecording
             // 
             this.tmrRecording.Interval = 300;
             this.tmrRecording.Tick += new System.EventHandler(this.tmrRecording_Tick);
+            // 
+            // colId
+            // 
+            this.colId.HeaderText = "ID";
+            this.colId.Name = "colId";
+            this.colId.Width = 80;
+            // 
+            // colText
+            // 
+            this.colText.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colText.HeaderText = "Text";
+            this.colText.Name = "colText";
+            // 
+            // colDuration
+            // 
+            this.colDuration.HeaderText = "Audio Duration";
+            this.colDuration.Name = "colDuration";
+            this.colDuration.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // usrRecAudio
             // 
@@ -186,15 +208,17 @@
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dgvSentences;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colText;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox txtCurrentSentence;
         private System.Windows.Forms.Button btnRecord;
         private System.Windows.Forms.Label lblTotalSentences;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cmbInputDevices;
-        private System.Windows.Forms.Label lblRecodStatus;
+        private System.Windows.Forms.Label lblRecordStatus;
         private System.Windows.Forms.Timer tmrRecording;
+        private System.Windows.Forms.Label lblAudioTime;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colText;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDuration;
     }
 }

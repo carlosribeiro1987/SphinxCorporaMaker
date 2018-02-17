@@ -10,10 +10,12 @@ using System.Windows.Forms;
 using Util.Text;
 using System.IO;
 using Util.Audio;
+using NAudio.Wave;
 
 namespace SphinxCorporaMaker.UserControls {
     public partial class usrRecAudio : UserControl {
         string audioDir = Path.Combine(Application.StartupPath, "CorporaFiles", "audio");
+
         RecordWaveAudio wavAudio = null;
         public usrRecAudio() {
             InitializeComponent();
@@ -28,23 +30,22 @@ namespace SphinxCorporaMaker.UserControls {
             dgvSentences.Rows.Clear();
             for (int i = 0; i < sentences.Length; i++) {
                 dgvSentences.Rows.Add((i + 1).ToString().PadLeft(6, '0'), sentences[i]);
+                dgvSentences.Rows[i].Cells[2].Value = HasAudio(dgvSentences.Rows[i]);
             }
             lblTotalSentences.Text = string.Format("{0} sentences.", dgvSentences.RowCount);
+            UpdateTotalTimeLabel();
             dgvSentences.Focus();
         }
 
         private void dgvSentences_SelectionChanged(object sender, EventArgs e) {
+            lblRecordStatus.Visible = true;
             btnRecord.Enabled = dgvSentences.SelectedRows.Count > 0;
             if (dgvSentences.SelectedRows.Count > 0) {
                 DataGridViewRow row = dgvSentences.SelectedRows[0];
                 txtCurrentSentence.Text = row.Cells[1].Value.ToString();
+
+
             }
-        }
-
-        private void btnRecord_Click(object sender, EventArgs e) {
-            
-
-            //MessageBox.Show(audioDir);
         }
 
         private void usrRecAudio_Load(object sender, EventArgs e) {
@@ -54,31 +55,51 @@ namespace SphinxCorporaMaker.UserControls {
 
         private void btnRecord_MouseUp(object sender, MouseEventArgs e) {
             dgvSentences.MultiSelect = false;
-            
+
             tmrRecording.Enabled = false;
-            lblRecodStatus.Text = "Hold the button to record.";
-            lblRecodStatus.ForeColor = Color.Black;
-            NextSentenceRow();
+            lblRecordStatus.Text = "Hold the button to record.";
+            lblRecordStatus.ForeColor = Color.Black;
+            
             if (wavAudio != null) {
                 wavAudio.Stop();
                 wavAudio = null;
             }
+            NextSentenceRow();
         }
+        private string HasAudio(DataGridViewRow row) {
+            string rowFile = Path.Combine(audioDir, row.Cells[0].Value.ToString() + ".wav");
+            bool hasAudio = File.Exists(rowFile);
+            if (hasAudio) {
+                TimeSpan duration = GetAudioFileTime(rowFile); 
+                return string.Format("{0}.{1:D3}", duration.ToString().Substring(0, 8), duration.Milliseconds);
+            }
+            else {
+                return "No audio";
+            }
+        }
+        private bool HasAudio() {
+            return File.Exists(Path.Combine(audioDir, dgvSentences.CurrentRow.Cells[0].Value.ToString() + ".wav"));
+        }
+
         private void NextSentenceRow() {
             DataGridViewRow currentRow = dgvSentences.CurrentRow;
             int currRowIndex = currentRow.Index;
             int maxRowIndex = dgvSentences.Rows.Count - 1 - 1;
+            dgvSentences.CurrentRow.Cells[2].Value = HasAudio(dgvSentences.CurrentRow);
+
+
             if (currRowIndex < maxRowIndex) {
                 DataGridViewRow nextRow = dgvSentences.Rows[currRowIndex + 1];
                 dgvSentences.CurrentCell = nextRow.Cells[0];
-                nextRow.Selected = true;
-                dgvSentences.Focus();
+                nextRow.Selected = true;                
             }
+            UpdateTotalTimeLabel();
+            dgvSentences.Focus();
         }
 
         private void btnRecord_MouseDown(object sender, MouseEventArgs e) {
-            lblRecodStatus.Text = "RECORDING...";
-            lblRecodStatus.ForeColor = Color.Red;
+            lblRecordStatus.Text = "RECORDING...";
+            lblRecordStatus.ForeColor = Color.Red;
             tmrRecording.Enabled = true;
             if (dgvSentences.SelectedRows.Count < 1)
                 return;
@@ -90,7 +111,36 @@ namespace SphinxCorporaMaker.UserControls {
         }
 
         private void tmrRecording_Tick(object sender, EventArgs e) {
-            lblRecodStatus.Visible = !lblRecodStatus.Visible;
+            lblRecordStatus.Visible = !lblRecordStatus.Visible;
+        }
+
+        private void DrawPlayButton() {
+
+        }
+
+        private TimeSpan GetTotalAudioTime(string dirPath) {
+            DirectoryInfo audioDir = new DirectoryInfo(dirPath);
+            TimeSpan total = TimeSpan.Zero;
+            foreach (var file in audioDir.GetFiles("*.wav")) {
+                WaveFileReader reader = new WaveFileReader(file.FullName);
+                TimeSpan span = reader.TotalTime;
+                total += span;
+                reader.Dispose();
+            }                       
+            return total;
+        }
+        private TimeSpan GetAudioFileTime(string filePath) {
+            WaveFileReader reader = new WaveFileReader(filePath);
+            TimeSpan duration = reader.TotalTime;
+            reader.Dispose();
+            return duration;
+        }
+        private void UpdateTotalTimeLabel() {
+            TimeSpan totalAudio = GetTotalAudioTime(audioDir);
+            if (totalAudio != TimeSpan.Zero)
+                lblAudioTime.Text = string.Format("Total audio time: {0}.{1:D3}", totalAudio.ToString().Substring(0, 8), totalAudio.Milliseconds);
+            else
+                lblAudioTime.Text = "Total audio time: 00:00:00.000";
         }
     }
 }

@@ -32,12 +32,14 @@
             this.btnOpen = new System.Windows.Forms.Button();
             this.fntChangeFont = new System.Windows.Forms.FontDialog();
             this.opnOpenText = new System.Windows.Forms.OpenFileDialog();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.menTypeText.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.txtRawText);
             this.groupBox2.Controls.Add(this.txtFilePath);
             this.groupBox2.Controls.Add(this.btnOpen);
@@ -85,15 +87,15 @@
             this.txtFilePath.Location = new System.Drawing.Point(10, 24);
             this.txtFilePath.Name = "txtFilePath";
             this.txtFilePath.ReadOnly = true;
-            this.txtFilePath.Size = new System.Drawing.Size(515, 20);
+            this.txtFilePath.Size = new System.Drawing.Size(258, 20);
             this.txtFilePath.TabIndex = 1;
             // 
             // btnOpen
             // 
             this.btnOpen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOpen.Location = new System.Drawing.Point(531, 22);
+            this.btnOpen.Location = new System.Drawing.Point(274, 22);
             this.btnOpen.Name = "btnOpen";
-            this.btnOpen.Size = new System.Drawing.Size(144, 23);
+            this.btnOpen.Size = new System.Drawing.Size(92, 23);
             this.btnOpen.TabIndex = 0;
             this.btnOpen.Text = "Open File";
             this.btnOpen.UseVisualStyleBackColor = true;
@@ -101,8 +103,17 @@
             // 
             // opnOpenText
             // 
-            this.opnOpenText.FileName = "openFileDialog1";
+            this.opnOpenText.FileName = "*.txt";
             this.opnOpenText.Filter = "Text files (*.txt) | *.txt";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(514, 22);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(161, 23);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Paste from clipboard";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // usrTypeText
             // 
@@ -129,5 +140,6 @@
         private System.Windows.Forms.ToolStripMenuItem menChangeFont;
         private System.Windows.Forms.FontDialog fntChangeFont;
         private System.Windows.Forms.OpenFileDialog opnOpenText;
+        private System.Windows.Forms.Button button1;
     }
 }

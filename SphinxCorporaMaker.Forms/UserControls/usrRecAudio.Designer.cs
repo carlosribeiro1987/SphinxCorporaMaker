@@ -24,6 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblAudioTime = new System.Windows.Forms.Label();
             this.lblTotalSentences = new System.Windows.Forms.Label();
@@ -147,6 +148,7 @@
             this.btnRecord.TabIndex = 4;
             this.btnRecord.Text = "Record";
             this.btnRecord.UseVisualStyleBackColor = true;
+            this.btnRecord.Click += new System.EventHandler(this.btnRecord_Click);
             this.btnRecord.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnRecord_MouseDown);
             this.btnRecord.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnRecord_MouseUp);
             // 
@@ -171,6 +173,7 @@
             // 
             this.colId.HeaderText = "ID";
             this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
             this.colId.Width = 80;
             // 
             // colText
@@ -178,11 +181,16 @@
             this.colText.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colText.HeaderText = "Text";
             this.colText.Name = "colText";
+            this.colText.ReadOnly = true;
             // 
             // colDuration
             // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.colDuration.DefaultCellStyle = dataGridViewCellStyle1;
             this.colDuration.HeaderText = "Audio Duration";
             this.colDuration.Name = "colDuration";
+            this.colDuration.ReadOnly = true;
             this.colDuration.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // usrRecAudio

@@ -7,20 +7,21 @@ using System.Threading.Tasks;
 using NAudio;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
-using Util.Exception;
+using Util.MyExceptions;
 
 namespace Util {
     public class AudioUtil {
         public enum MonoOutChannels { Both, Right, Left };
+        public enum SilenceLocation { Start, End };
         public void DetectSilence() {
 
         }
 
-        public void RemoveSilence() {
+        public void RemoveSilences() {
 
         }
 
-        public void SplitBySilence() {
+        public void SplitBySilence(string inputFile, string outputFolder, int threshold) {
 
         }
 
@@ -88,7 +89,48 @@ namespace Util {
             }
         }
 
+        private static bool IsSilence(float amplitude, sbyte threshold) {
+            double dB = Math.Log10(Math.Abs(amplitude));
+            return dB < threshold;
+        }
 
+        public static TimeSpan GetSilenceDuration(AudioFileReader reader,
+                                              SilenceLocation location,
+                                              sbyte silenceThreshold = -20) {
+            int counter = 0;
+            bool volumeFound = false;
+            bool eof = false;
+            long oldPosition = reader.Position;
+
+            var buffer = new float[reader.WaveFormat.SampleRate * 4];
+            while (!volumeFound && !eof) {
+                int samplesRead = reader.Read(buffer, 0, buffer.Length);
+                if (samplesRead == 0)
+                    eof = true;
+
+                for (int n = 0; n < samplesRead; n++) {
+                    if (IsSilence(buffer[n], silenceThreshold)) {
+                        counter++;
+                    }
+                    else {
+                        if (location == SilenceLocation.Start) {
+                            volumeFound = true;
+                            break;
+                        }
+                        else if (location == SilenceLocation.End) {
+                            counter = 0;
+                        }
+                    }
+                }
+            }
+
+            // reset position
+            reader.Position = oldPosition;
+
+            double silenceSamples = (double)counter / reader.WaveFormat.Channels;
+            double silenceDuration = (silenceSamples / reader.WaveFormat.SampleRate) * 1000;
+            return TimeSpan.FromMilliseconds(silenceDuration);
+        }
 
     }
 }

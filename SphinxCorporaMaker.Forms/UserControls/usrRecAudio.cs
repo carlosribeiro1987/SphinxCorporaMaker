@@ -11,6 +11,7 @@ using Util.Text;
 using System.IO;
 using Util.Audio;
 using NAudio.Wave;
+using Util;
 
 namespace SphinxCorporaMaker.UserControls {
     public partial class usrRecAudio : UserControl {
@@ -64,6 +65,9 @@ namespace SphinxCorporaMaker.UserControls {
                 wavAudio.Stop();
                 wavAudio = null;
             }
+            AudioFileReader reader = new AudioFileReader(Path.Combine(audioDir, dgvSentences.CurrentRow.Cells[0].Value.ToString() + ".wav"));
+            TimeSpan silence = AudioUtil.GetSilenceDuration(reader, AudioUtil.SilenceLocation.Start);
+            MessageBox.Show("Silence: "+silence.TotalMilliseconds.ToString());
             NextSentenceRow();
         }
         private string HasAudio(DataGridViewRow row) {
@@ -141,6 +145,14 @@ namespace SphinxCorporaMaker.UserControls {
                 lblAudioTime.Text = string.Format("Total audio time: {0}.{1:D3}", totalAudio.ToString().Substring(0, 8), totalAudio.Milliseconds);
             else
                 lblAudioTime.Text = "Total audio time: 00:00:00.000";
+        }
+
+        private void button1_Click(object sender, EventArgs e) {
+
+        }
+
+        private void btnRecord_Click(object sender, EventArgs e) {
+
         }
     }
 }

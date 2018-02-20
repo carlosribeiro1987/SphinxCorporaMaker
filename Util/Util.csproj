@@ -113,8 +113,9 @@
     <Compile Include="Audio\AudioFileReaderExt.cs" />
     <Compile Include="Audio\PlotWaveform.cs" />
     <Compile Include="Audio\RecordWaveAudio.cs" />
-    <Compile Include="Exception\AudioException.cs" />
-    <Compile Include="Exception\WebSpeechException.cs" />
+    <Compile Include="Audio\WaveProcessor.cs" />
+    <Compile Include="MyExceptions\AudioException.cs" />
+    <Compile Include="MyExceptions\WebSpeechException.cs" />
     <Compile Include="WebSpeech\WebSpeech.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Text\TextUtil.cs" />
